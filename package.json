@@ -1,0 +1,28 @@
+{
+  "name": "social-network-api-pia",
+  "version": "1.0.0",
+  "description": "Challenge 18 nosql week",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev-start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pia-Fierro/social-network-api-pia.git"
+  },
+  "author": "Pia Fierro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pia-Fierro/social-network-api-pia/issues"
+  },
+  "homepage": "https://github.com/Pia-Fierro/social-network-api-pia#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
