@@ -8,7 +8,7 @@ var validateEmail = function (email) {
 };
 
 // create a new instane of mongoose schema to define shape of User document
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     // add properties and their types
     username: { type: String, unique: true, require: true, trimmed: true },
@@ -22,8 +22,9 @@ const userSchema = new mongoose.Schema(
         "Please fill a valid email address",
       ],
     },
-    thoughts: [{ type: Schema.Type.ObjectID, ref: "Thoughts" }],
-    friends: [{ type: Schema.Type.ObjectID, ref: "Users" }],
+    // agregation of thoughs and friends
+    thoughts: [{ type: Schema.Type.ObjectID, ref: "Thought" }],
+    friends: [{ type: Schema.Type.ObjectID, ref: "User" }],
   },
   {
     toJSON: {
@@ -40,6 +41,6 @@ userSchema.virtual("friendCount").get(function () {
 });
 
 // create a User model using the usersSchema
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

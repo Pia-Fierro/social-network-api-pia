@@ -1,5 +1,37 @@
 const { User, Thought } = require("../models");
 
+// **`/api/users`**
+
+// - `GET` all users
+
+// - `GET` a single user by its `_id` and populated thought and friend data
+
+// - `POST` a new user:
+
+// ```json
+// // example data
+// {
+//   "username": "lernantino",
+//   "email": "lernantino@gmail.com"
+// }
+// ```
+
+// - `PUT` to update a user by its `_id`
+
+// - `DELETE` to remove user by its `_id`
+
+// **BONUS**: Remove a user's associated thoughts when deleted.
+
+// ---
+
+// **`/api/users/:userId/friends/:friendId`**
+
+// - `POST` to add a new friend to a user's friend list
+
+// - `DELETE` to remove a friend from a user's friend list
+
+// ---
+
 // Get all user
 module.exports = {
   getUsers(req, res) {
@@ -11,7 +43,10 @@ module.exports = {
   // Find an user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      // populete thoughts missing here
+      // populete thoughts and friends
+      .select("-__v")
+      .populate({ path: "thoughts", select: "-__v" })
+      .populate({ path: "friends", select: "-__v" })
       .then((userData) =>
         !userData
           ? res.status(404).json({ message: "No user found with that id " })

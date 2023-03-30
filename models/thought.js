@@ -5,7 +5,7 @@ const moment = require("moment");
 // create a new instane of mongoose schema to define shape of Thought document
 const thoughtSchema = new Schema(
   {
-    // add properties and their types
+    // add properties and their type
     thoughtText: { type: String, require: true, minLenght: 1, maxLenght: 280 },
     createdAt: {
       type: Date,
@@ -13,10 +13,12 @@ const thoughtSchema = new Schema(
       get: (createdVal) => moment(createdVal).format("DD MM YYYY, hh:mm a"),
     },
     username: { type: String, require: true },
+    // composition
     reaction: [reactionSchema],
   },
   {
     toJSON: {
+      virtuals: true,
       getters: true,
     },
   }
@@ -53,6 +55,6 @@ const reactionSchema = new Schema(
 );
 
 // create a Thought model using the thoughtSchema
-const Thought = mongoose.model("Thought", thoughtSchema);
+const Thought = model("Thought", thoughtSchema);
 
 module.exports = Thought;
