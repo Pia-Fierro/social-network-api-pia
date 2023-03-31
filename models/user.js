@@ -23,8 +23,8 @@ const userSchema = new Schema(
       ],
     },
     // agregation of thoughs and friends
-    thoughts: [{ type: Schema.Type.ObjectID, ref: "Thought" }],
-    friends: [{ type: Schema.Type.ObjectID, ref: "User" }],
+    thoughts: [{ type: Schema.Types.ObjectID, ref: "Thought" }],
+    friends: [{ type: Schema.Types.ObjectID, ref: "User" }],
   },
   {
     toJSON: {

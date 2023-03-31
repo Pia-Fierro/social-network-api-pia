@@ -2,6 +2,31 @@
 const { Schema, model, Types } = require("mongoose");
 const moment = require("moment");
 
+// create a new instane of mongoose schema to define shape of Reaction documents
+const reactionSchema = new Schema(
+  {
+    // add properties and their types
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: { type: String, require: true, maxLength: 280 },
+    username: { type: String, require: true },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdAtVal) => moment(createdAtVal).format("DD MM YYYY, hh:mm a"),
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      getters: true,
+    },
+    id: false,
+  }
+);
+
 // create a new instane of mongoose schema to define shape of Thought document
 const thoughtSchema = new Schema(
   {
@@ -21,6 +46,7 @@ const thoughtSchema = new Schema(
       virtuals: true,
       getters: true,
     },
+    id: false,
   }
 );
 
@@ -28,31 +54,6 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reaction.length;
 });
-
-// create a new instane of mongoose schema to define shape of Reaction documents
-const reactionSchema = new Schema(
-  {
-    // add properties and their types
-    reactionId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    reactionBody: { type: String, require: true, maxLength: 280 },
-    username: { type: String, require: true },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (createdVal) => moment(createdVal).format("DD MM YYYY, hh:mm a"),
-    },
-  },
-  {
-    toJSON: {
-      virtuals: true,
-      getters: true,
-    },
-    id: false,
-  }
-);
 
 // create a Thought model using the thoughtSchema
 const Thought = model("Thought", thoughtSchema);
