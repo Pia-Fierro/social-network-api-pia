@@ -1,16 +1,7 @@
 const { User, Thought } = require("../models");
 
-// **`/api/users`**
-// - `GET` a single user by its `_id` and populated thought and friend data
-// - `PUT` to update a user by its `_id`
-
-// - `DELETE` to remove user by its `_id`
-
 // **BONUS**: Remove a user's associated thoughts when deleted.
-
-// ---
-
-// **`/api/users/:userId/friends/:friendId`**
+// **``**
 
 // - `POST` to add a new friend to a user's friend list
 
@@ -48,6 +39,47 @@ module.exports = {
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
+      });
+  },
+  // update an existing user
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user found with that id!" })
+          : res.json(userData)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // delete an user
+  deleteUser(req, res) {
+    User.findByIdAndRemove({ _id: req.params.userId })
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user found with that id" })
+          : res.json(userData)
+      )
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+  },
+  addFriends(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((userData) =>
+        !userData
+          ? res.status(404).json({ message: "No user found with that id" })
+          : res.json(userData)
+      )
+      .catch((err) => {
+        res.status(500).json(err);
       });
   },
 };
