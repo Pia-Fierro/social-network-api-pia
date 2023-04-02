@@ -2,10 +2,6 @@ const { User, Thought } = require("../models");
 
 // **BONUS**: Remove a user's associated thoughts when deleted.
 
-// - `DELETE` to remove a friend from a user's friend list
-
-// ---
-
 module.exports = {
   // Get all user
   getUsers(req, res) {
@@ -54,7 +50,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // delete an user and associated thoughst
+  // delete an user
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((userData) =>
