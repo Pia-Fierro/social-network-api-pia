@@ -26,4 +26,4 @@ npm start
 ## Video Demo
 >[User routes](https://watch.screencastify.com/v/8688NJCEe1A8Htn701SH/)
 
->[Thoughts routes](https://watch.screencastify.com/v/4g47kgd6eDDSYZa2MMgB)
+>[Thoughts routes](https://watch.screencastify.com/v/dDto3xLWQGD7qKZq6VJ7)
