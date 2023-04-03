@@ -6,6 +6,10 @@ module.exports = {
   // Get all user
   getUsers(req, res) {
     User.find()
+      // populate user thoughts and friends
+      .populate({ path: "thoughts", select: "-__v" })
+      .populate({ path: "friends", select: "-__v" })
+      .select("-__v")
       .select("-__v")
       .then((userData) => res.json(userData))
       .catch((err) => res.status(500).json(err));
@@ -69,6 +73,8 @@ module.exports = {
       { $addToSet: { friends: req.params.friendId } },
       { new: true }
     )
+      .populate({ path: "friends", select: "-__v" })
+      .select("-__v")
       .then((userData) =>
         !userData
           ? res.status(404).json({ message: "No user found with that id" })
@@ -85,6 +91,8 @@ module.exports = {
       { $pull: { friends: req.params.friendId } },
       { new: true }
     )
+      .populate({ path: "friends", select: "-__v" })
+      .select("-__v")
       .then((userData) =>
         !userData
           ? res.status(404).json({ message: "No user found with that id" })
